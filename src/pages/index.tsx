@@ -23,8 +23,9 @@ function index() {
     // 4. if already complete, setDoubleNumber to dobuleNumber
     let countDouble = 0;
 
-    dominoes.map((domino: Domino) => {
+    sourceDominoes.map((domino: Domino) => {
       if (domino[0] === domino[1]) {
+        console.log("exec");
         countDouble++;
       }
     });
@@ -97,21 +98,27 @@ function index() {
         }
       }
     }
-    const uniqueIndex = new Set(duplicateIndex);
 
-    for (let i = 0; i < sourceDominoes.length; i++) {
-      if (!uniqueIndex.has(i)) {
-        uniqueData.push(sourceDominoes[i]);
+    if (duplicateIndex.length !== 0) {
+      const uniqueIndex = new Set(duplicateIndex);
+
+      for (let i = 0; i < sourceDominoes.length; i++) {
+        if (!uniqueIndex.has(i)) {
+          uniqueData.push(sourceDominoes[i]);
+        }
       }
+      setSourceDominoes(uniqueData);
     }
-    setSourceDominoes(uniqueData);
   }
 
   function handleRemoveBasedOnTotal(value: number) {
     const newDominoes = sourceDominoes.slice().filter((domino) => {
       return domino[0] + domino[1] !== value;
     });
-    setSourceDominoes(newDominoes);
+    if (newDominoes.length !== sourceDominoes.length) {
+      console.log(newDominoes);
+      setSourceDominoes(newDominoes);
+    }
   }
 
   function handleReset() {
@@ -119,9 +126,9 @@ function index() {
   }
 
   useEffect(() => {
-    setDominoes(sourceDominoes);
     checkDoubleNumber();
-  }, [sourceDominoes, dominoes]);
+    setDominoes(sourceDominoes);
+  }, [sourceDominoes]);
 
   return (
     <main className="max-w-screen-sm mx-auto px-4 py-10">

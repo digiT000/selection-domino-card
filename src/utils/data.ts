@@ -13,4 +13,6 @@ export const initialData: DominoProps = [
   [6, 1],
   [2, 2],
   [3, 3],
+  [9, 1],
+  [9, 9],
 ];
